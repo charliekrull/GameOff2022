@@ -19,6 +19,11 @@ require 'src/states/entity/EntityWalkState'
 require 'src/states/entity/player/PlayerIdleState'
 require 'src/states/entity/player/PlayerWalkState'
 
+require 'src/world/Room'
+
 gTextures = {
-   ['princess-damsel'] = love.graphics.newImage('graphics/PrincessDamsel_V2_e1.png')
+   ['princess-damsel'] = love.graphics.newImage('graphics/PrincessDamsel_V2_e1.png'),
+   ['floor1'] = love.graphics.newImage('graphics/Floor_1.png'),
+   ['wall1'] = love.graphics.newImage('graphics/Wall_1.png'),
+   ['bat'] = love.graphics.newImage('graphics/Lil_Minionbat_V1_noparticles.png')
 }

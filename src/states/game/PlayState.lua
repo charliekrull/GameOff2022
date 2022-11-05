@@ -19,6 +19,8 @@ function PlayState:init()
     }
 
     self.player:changeState('idle')
+
+    self.currentRoom = Room(self.player)
 end
 
 function PlayState:update(dt)
@@ -26,11 +28,15 @@ function PlayState:update(dt)
         love.event.quit()
     end
     self.player.stateMachine:update(dt)
+    self.currentRoom:update(dt)
 end
 
 function PlayState:render()
     love.graphics.push()
     --render the world
+    self.currentRoom:render()
+   
+
     self.player:render()
     love.graphics.pop()
 end
