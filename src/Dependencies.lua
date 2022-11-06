@@ -27,3 +27,9 @@ gTextures = {
    ['wall1'] = love.graphics.newImage('graphics/Wall_1.png'),
    ['bat'] = love.graphics.newImage('graphics/Lil_Minionbat_V1_noparticles.png')
 }
+
+gFonts = {
+   ['large'] = love.graphics.newFont('fonts/joystix monospace.ttf', 24),
+   ['medium'] = love.graphics.newFont('fonts/joystix monospace.ttf', 16),
+   ['small'] = love.graphics.newFont('fonts/joystix monospace.ttf', 10)
+}

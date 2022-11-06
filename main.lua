@@ -8,6 +8,8 @@ require 'src/Dependencies'
 function love.load()
 
     love.window.setTitle('Game Title')
+ 
+    math.randomseed(os.time())
 
     love.graphics.setDefaultFilter('nearest', 'nearest')
 
@@ -26,6 +28,7 @@ function love.load()
     gStateMachine:change('start')
 
     love.keyboard.keysPressed = {}
+
 
 end
 
