@@ -1,6 +1,7 @@
 Class = require 'lib/class'
 push = require 'lib/push'
 Timer = require 'lib/knife/timer'
+Event = require 'lib/knife/event'
 
 require 'src/constants'
 
@@ -12,6 +13,7 @@ require 'src/StateMachine'
 require 'src/Entity'
 require 'src/Player'
 require 'src/entity_defs'
+require 'src/util'
 
 
 require 'src/states/entity/EntityIdleState'
@@ -25,7 +27,12 @@ gTextures = {
    ['princess-damsel'] = love.graphics.newImage('graphics/PrincessDamsel_V2_e1.png'),
    ['floor1'] = love.graphics.newImage('graphics/Floor_1.png'),
    ['wall1'] = love.graphics.newImage('graphics/Wall_1.png'),
-   ['bat'] = love.graphics.newImage('graphics/Lil_Minionbat_V1_noparticles.png')
+   ['bat'] = love.graphics.newImage('graphics/Lil_Minionbat_V1_noparticles.png'),
+   ['tilesheet'] = love.graphics.newImage('graphics/Map_Tileset_06.png')
+}
+
+gFrames = { ['tiles'] = GenerateQuads(gTextures['tilesheet'], TILE_SIZE, TILE_SIZE)
+
 }
 
 gFonts = {

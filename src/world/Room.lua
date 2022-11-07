@@ -19,14 +19,14 @@ function Room:generateWallsAndFloors()
         table.insert(self.tiles, {})
 
         for x = 1, self.width do
-            local id = TILE_WALL
-            if not (x == 1 or x == self.width or y == 1 or y == self.height) then
-                id = TILE_FLOOR
+            local set = WOOD_FLOORS
+            if x == 1 or x == self.width or y == 1 or y == self.height then
+                set = STONE_WALLS
 
             end
 
             table.insert(self.tiles[y], {
-                id = id
+                id = set[math.random(#set)]
             })
         end
     end
@@ -40,7 +40,7 @@ function Room:render()
     for y = 1, self.height do
         for x = 1, self.width do
             local tile = self.tiles[y][x]
-            love.graphics.draw(gTextures[tile.id],
+            love.graphics.draw(gTextures['tilesheet'], gFrames['tiles'][tile.id],
             (x - 1) * TILE_SIZE,
             (y - 1) * TILE_SIZE)
         end
