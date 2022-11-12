@@ -2,7 +2,7 @@ Class = require 'lib/class'
 push = require 'lib/push'
 Timer = require 'lib/knife/timer'
 Event = require 'lib/knife/event'
-
+sti = require 'lib/sti' --Simple Tiled Implementation, to use with .lua files from Tiled
 require 'src/constants'
 
 require 'src/states/BaseState'
