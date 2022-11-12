@@ -22,6 +22,7 @@ require 'src/states/entity/player/PlayerIdleState'
 require 'src/states/entity/player/PlayerWalkState'
 
 require 'src/world/Room'
+require 'tilemaps/testMap'
 
 gTextures = {
    ['princess-damsel'] = love.graphics.newImage('graphics/PrincessDamsel_V2_e1.png'),

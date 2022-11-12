@@ -20,7 +20,8 @@ function PlayState:init()
 
     self.player:changeState('idle')
 
-    self.currentRoom = Room(self.player)
+    --self.currentRoom = Room(self.player)
+    self.currentMap = sti('tilemaps/testMap.lua')
 end
 
 function PlayState:update(dt)
@@ -28,13 +29,15 @@ function PlayState:update(dt)
         love.event.quit()
     end
     self.player.stateMachine:update(dt)
-    self.currentRoom:update(dt)
+    --self.currentRoom:update(dt)
 end
 
 function PlayState:render()
     love.graphics.push()
     --render the world
-    self.currentRoom:render()
+    --self.currentRoom:render()
+    self.currentMap:draw() --function from sti, deal with it yo
+
    
 
     self.player:render()
