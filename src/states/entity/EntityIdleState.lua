@@ -2,6 +2,8 @@ EntityIdleState = Class{__includes = BaseState}
 
 function EntityIdleState:init(entity)
     self.entity = entity
+
+    self.entity:changeAnimation('idle-'.. self.entity.direction)
     
 end
 
@@ -11,5 +13,6 @@ function EntityIdleState:processAI(params, dt)
 end
 
 function EntityIdleState:render()
-    love.graphics.draw(gTextures[self.entity.texture], math.floor(self.entity.x), math.floor(self.entity.y))
+    local anim = self.entity.currentAnimation
+    love.graphics.draw(gTextures[anim.texture], gFrames[anim.texture][anim:getCurrentFrame()], math.floor(self.entity.x), math.floor(self.entity.y))
 end

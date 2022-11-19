@@ -5,6 +5,7 @@ function PlayState:enter()
     self.camY = 0
     self.player = Player{
         walkSpeed = ENTITY_DEFS['player'].walkSpeed,
+        animations = ENTITY_DEFS['player'].animations,
 
         x = VIRTUAL_WIDTH / 2 - 8,
         y = VIRTUAL_HEIGHT / 2 - 16,
@@ -15,13 +16,6 @@ function PlayState:enter()
         texture = 'princess-damsel'
     }
 
-    self.player.stateMachine = StateMachine{
-        ['walk'] = function() return PlayerWalkState(self.player) end,
-        ['idle'] = function() return PlayerIdleState(self.player) end
-    }
-
-    self.player:changeState('idle')
-
     self.currentRoom = Room({tileMap = sti('tilemaps/prisonCell.lua'), 
         player = self.player,
         width = 45,
@@ -29,6 +23,13 @@ function PlayState:enter()
     self.currentMap = self.currentRoom.tileMap
     self.player.room = self.currentRoom
     self.player.map = self.currentMap
+
+    self.player.stateMachine = StateMachine{
+        ['walk'] = function() return PlayerWalkState(self.player, self.currentRoom) end,
+        ['idle'] = function() return PlayerIdleState(self.player) end
+    }
+
+    self.player:changeState('idle')
     
 end
 
@@ -66,6 +67,6 @@ function PlayState:updateCamera()
         math.min(TILE_SIZE * self.currentMap.width - VIRTUAL_WIDTH,
         self.player.x - (VIRTUAL_WIDTH / 2 - 8)))
 
-    self.camY =  math.min(TILE_SIZE * self.currentMap.height - VIRTUAL_HEIGHT,
-        self.player.y - (VIRTUAL_HEIGHT / 2 - 8))
+    self.camY =  math.max(0, math.min(TILE_SIZE * self.currentMap.height - VIRTUAL_HEIGHT,
+        self.player.y - (VIRTUAL_HEIGHT / 2 - 8)))
 end

@@ -1,7 +1,8 @@
 EntityWalkState = Class{__includes = BaseState}
 
-function EntityWalkState:init(entity)
-    self.entity = entity 
+function EntityWalkState:init(entity, room)
+    self.entity = entity
+    self.room = room 
 end
 
 function EntityWalkState:update(dt)
@@ -46,5 +47,6 @@ function EntityWalkState:processAI(params, dt)
 end
 
 function EntityWalkState:render()
-    love.graphics.draw(gTextures[self.entity.texture], math.floor(self.entity.x), math.floor(self.entity.y))
+    local anim = self.entity.currentAnimation
+    love.graphics.draw(gTextures[anim.texture], gFrames[anim.texture][anim:getCurrentFrame()], math.floor(self.entity.x), math.floor(self.entity.y))
 end

@@ -16,6 +16,7 @@ require 'src/Player'
 require 'src/entity_defs'
 require 'src/util'
 
+require 'src/Animation'
 
 require 'src/states/entity/EntityIdleState'
 require 'src/states/entity/EntityWalkState'
@@ -26,14 +27,15 @@ require 'src/world/Room'
 require 'tilemaps/testMap'
 
 gTextures = {
-   ['princess-damsel'] = love.graphics.newImage('graphics/PrincessDamsel_V2_e1.png'),
+   ['princess-damsel'] = love.graphics.newImage('graphics/PD_Sprite_v1.png'),
    ['floor1'] = love.graphics.newImage('graphics/Floor_1.png'),
    ['wall1'] = love.graphics.newImage('graphics/Wall_1.png'),
    ['bat'] = love.graphics.newImage('graphics/Lil_Minionbat_V1_noparticles.png'),
    ['tilesheet'] = love.graphics.newImage('graphics/Map_Tileset_06.png')
 }
 
-gFrames = { ['tiles'] = GenerateQuads(gTextures['tilesheet'], TILE_SIZE, TILE_SIZE)
+gFrames = { ['tiles'] = GenerateQuads(gTextures['tilesheet'], TILE_SIZE, TILE_SIZE),
+['princess-damsel'] = GenerateQuads(gTextures['princess-damsel'], TILE_SIZE, 32)
 
 }
 
