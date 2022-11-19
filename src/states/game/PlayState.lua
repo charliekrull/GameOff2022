@@ -20,6 +20,8 @@ function PlayState:enter()
         player = self.player,
         width = 45,
         height = 42})
+
+    
     self.currentMap = self.currentRoom.tileMap
     self.player.room = self.currentRoom
     self.player.map = self.currentMap
@@ -53,12 +55,16 @@ function PlayState:render()
     
     
     love.graphics.translate(-math.floor(self.camX), -math.floor(self.camY))
-    self.currentMap:draw(-math.floor(self.camX), -math.floor(self.camY)) --function from sti, deal with it yo
+    self.currentMap:draw(-math.floor(self.camX), -math.floor(self.camY)) --function from sti
     
    
-    
+    for k, entity in pairs(self.currentRoom.entities) do
+        entity:render()
+    end
     
     self.player:render()
+    
+    
     love.graphics.pop()
 end
 

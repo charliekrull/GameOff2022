@@ -13,6 +13,42 @@ function Room:init(def)
 
     self.objects = {}
 
+    self:generateWalls()
+
+    self:generateEntities()
+   
+
+
+
+    self.player = def.player
+end
+
+
+function Room:update(dt)
+    self.player:update(dt)
+
+    for k, entity in pairs(self.entities) do
+        entity:processAI({room = self}, dt)
+        entity:update(dt)
+    end
+   
+end
+
+function Room:render()
+    for y = 1, self.height do
+        for x = 1, self.width do
+            local tile = self.tiles[y][x]
+            love.graphics.draw(gTextures['tilesheet'], gFrames['tiles'][tile.id],
+            (x - 1) * TILE_SIZE,
+            (y - 1) * TILE_SIZE)
+        end
+    end
+    for k, obj in pairs(self.objects) do
+        obj:render()
+    end
+end
+
+function Room:generateWalls()
     if self.tileMap.layers['Walls'] then
         for k, obj in pairs(self.tileMap.layers['Walls'].objects) do
             local wall = GameObject{
@@ -28,25 +64,44 @@ function Room:init(def)
             
         end
     end
-
-    self.player = def.player
 end
 
 
-function Room:update(dt)
-    self.player:update(dt)
-end
+function Room:generateEntities() --put the entities in the right spots
 
-function Room:render()
-    for y = 1, self.height do
-        for x = 1, self.width do
-            local tile = self.tiles[y][x]
-            love.graphics.draw(gTextures['tilesheet'], gFrames['tiles'][tile.id],
-            (x - 1) * TILE_SIZE,
-            (y - 1) * TILE_SIZE)
+    if self.tileMap.layers['Entities'] then
+        for k, ent in pairs(self.tileMap.layers['Entities'].objects) do
+            local e = Entity{
+                walkSpeed = ENTITY_DEFS['bat'].walkSpeed,
+                animations = ENTITY_DEFS['bat'].animations,
+
+                --place the entity in the room
+                x = ent.x,
+                y = ent.y,
+
+                width = ENTITY_DEFS['bat'].width,
+                height = ENTITY_DEFS['bat'].height,
+
+                texture = 'bat',
+
+                room = self
+
+            }
+
+            e.stateMachine = StateMachine{
+                ['walk'] = function() return EntityWalkState(e, self) end,
+                ['idle'] = function() return EntityIdleState(e) end
+            }
+
+            e:changeState('idle')
+
+            table.insert(self.entities, e)
+
         end
     end
-    for k, obj in pairs(self.objects) do
-        obj:render()
-    end
+
+end
+
+function Room:generateObjects() --add objects to the room
+
 end

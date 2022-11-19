@@ -30,12 +30,13 @@ gTextures = {
    ['princess-damsel'] = love.graphics.newImage('graphics/PD_Sprite_v1.png'),
    ['floor1'] = love.graphics.newImage('graphics/Floor_1.png'),
    ['wall1'] = love.graphics.newImage('graphics/Wall_1.png'),
-   ['bat'] = love.graphics.newImage('graphics/Lil_Minionbat_V1_noparticles.png'),
+   ['bat'] = love.graphics.newImage('graphics/Lil_Minionbat_V1_sheet.png'),
    ['tilesheet'] = love.graphics.newImage('graphics/Map_Tileset_06.png')
 }
 
 gFrames = { ['tiles'] = GenerateQuads(gTextures['tilesheet'], TILE_SIZE, TILE_SIZE),
-['princess-damsel'] = GenerateQuads(gTextures['princess-damsel'], TILE_SIZE, 32)
+['princess-damsel'] = GenerateQuads(gTextures['princess-damsel'], TILE_SIZE, 32),
+['bat'] = GenerateQuads(gTextures['bat'], 32, TILE_SIZE)
 
 }
 

@@ -55,6 +55,59 @@ ENTITY_DEFS = {
     },
 
     ['bat'] = {
-        texture = 'bat'
+        walkSpeed = BAT_WALK_SPEED,
+        width = 32,
+        height = 16,
+
+        animations = {
+            ['walk-right'] = {
+                frames = {1, 2},
+                interval = 0.1,
+                texture = 'bat'
+            },
+
+            ['walk-down'] = {
+                frames = {1, 2},
+                interval = 0.1,
+                texture = 'bat'
+            },
+
+            ['walk-left'] = {
+                frames = {1, 2},
+                interval = 0.1,
+                texture = 'bat'
+            },
+
+            ['walk-up'] = {
+                frames = {3, 4},
+                interval = 0.1,
+                texture = 'bat'
+            },
+
+            ['idle-right'] = {
+                frames = {1},
+                interval = 1,
+                texture = 'bat'
+            },
+
+            ['idle-down'] = {
+                frames = {1},
+                interval = 1,
+                texture = 'bat'
+            },
+
+            ['idle-left'] = {
+                frames = {1},
+                interval = 1,
+                texture = 'bat'
+            },
+
+            ['idle-up'] = {
+                frames = {1},
+                interval = 1,
+                texture = 'bat'
+            },
+        }
     }
+
 }
