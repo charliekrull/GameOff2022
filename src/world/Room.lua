@@ -1,36 +1,37 @@
 Room = Class{}
 
-function Room:init(player)
-    self.width = MAP_WIDTH
-    self.height = MAP_HEIGHT
+function Room:init(def)
+    self.width = def.width
+    self.height = def.height
     
     self.tiles = {}
-    self:generateWallsAndFloors()
+    self.tileMap = def.tileMap
+
+    
     
     self.entities = {}
 
     self.objects = {}
 
-    self.player = player
-end
-
-function Room:generateWallsAndFloors()
-    for y = 1, self.height do
-        table.insert(self.tiles, {})
-
-        for x = 1, self.width do
-            local set = WOOD_FLOORS
-            if x == 1 or x == self.width or y == 1 or y == self.height then
-                set = STONE_WALLS
-
-            end
-
-            table.insert(self.tiles[y], {
-                id = set[math.random(#set)]
-            })
+    if self.tileMap.layers['Walls'] then
+        for k, obj in pairs(self.tileMap.layers['Walls'].objects) do
+            local wall = GameObject{
+                width = obj.width,
+                height = obj.height,
+                solid = true,
+                x = obj.x,
+                y = obj.y,
+                texture = gTextures['tilesheet'],
+                frame = EMPTY_TILE
+            }
+            table.insert(self.objects, wall)
+            
         end
     end
+
+    self.player = def.player
 end
+
 
 function Room:update(dt)
     self.player:update(dt)
@@ -44,5 +45,8 @@ function Room:render()
             (x - 1) * TILE_SIZE,
             (y - 1) * TILE_SIZE)
         end
+    end
+    for k, obj in pairs(self.objects) do
+        obj:render()
     end
 end

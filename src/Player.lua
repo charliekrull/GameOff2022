@@ -23,3 +23,4 @@ end
 function Player:render()
     Entity.render(self)
 end
+

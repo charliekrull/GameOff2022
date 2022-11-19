@@ -20,6 +20,8 @@ function Entity:init(def)
 
     self.walkSpeed = def.walkSpeed
     self.texture = def.texture
+
+    self.room = def.room
 end
 
 function Entity:createAnimations(animations)
@@ -66,4 +68,22 @@ function Entity:render(adjacentOffsetX, adjacentOFfsetY)
     self.stateMachine:render()
     love.graphics.setColor(1, 1, 1, 1)
     self.x, self.y = self.x - (adjacentOffsetX or 0), self.y - (adjacentOFfsetY or 0)
+end
+
+function Entity:checkObjectCollisions()
+    local collidedObjects = {}
+
+    for k, object in pairs(self.room.objects) do
+        if self:collides(object) then
+            if object.solid then
+                table.insert(collidedObjects, object)
+            elseif object.consumable then
+                object.onConsume(self)
+                table.remove(self.room.objects, k)
+            end
+        end
+    end
+
+    return collidedObjects
+
 end
