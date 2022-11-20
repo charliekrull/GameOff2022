@@ -13,14 +13,14 @@ end
 
 function EntityIdleState:processAI(params, dt)
     if self.waitDuration == 0 then
-       self.waitDuration = math.random(3)
+       self.waitDuration = 1
        
     else
         self.waitTimer = self.waitTimer + dt
     end
 
     if self.waitTimer >= self.waitDuration then
-        self.entity:changeState('walk')
+        self.entity:changeState('patrol')
     end
 end
 

@@ -20,6 +20,7 @@ require 'src/Animation'
 
 require 'src/states/entity/EntityIdleState'
 require 'src/states/entity/EntityWalkState'
+require 'src/states/entity/EntityPatrolState'
 require 'src/states/entity/player/PlayerIdleState'
 require 'src/states/entity/player/PlayerWalkState'
 

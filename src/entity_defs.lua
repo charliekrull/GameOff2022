@@ -103,7 +103,7 @@ ENTITY_DEFS = {
             },
 
             ['idle-up'] = {
-                frames = {1},
+                frames = {3},
                 interval = 1,
                 texture = 'bat'
             },

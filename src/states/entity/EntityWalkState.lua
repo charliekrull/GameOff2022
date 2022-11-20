@@ -12,10 +12,6 @@ function EntityWalkState:update(dt)
 
     self.objHit = false
 
-    if #self.entity:checkObjectCollisions() > 0 then
-        self.objHit = true
-    end
-
     if self.entity.direction == 'left' then
         self.entity.x = self.entity.x - self.entity.walkSpeed * dt
         
@@ -35,6 +31,7 @@ function EntityWalkState:update(dt)
     local collidedObjects = self.entity:checkObjectCollisions()
 
     if #collidedObjects > 0 then
+        self.objHit = true
         if self.entity.direction == 'left' then
             self.entity.x = self.entity.x + self.entity.walkSpeed * dt
 
