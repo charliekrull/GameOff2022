@@ -3,6 +3,9 @@ PlayState = Class{__includes = BaseState}
 function PlayState:enter()
     self.camX = 0
     self.camY = 0
+
+    
+
     self.player = Player{
         walkSpeed = ENTITY_DEFS['player'].walkSpeed,
         animations = ENTITY_DEFS['player'].animations,
@@ -25,6 +28,8 @@ function PlayState:enter()
     self.currentMap = self.currentRoom.tileMap
     self.player.room = self.currentRoom
     self.player.map = self.currentMap
+
+    
 
     self.player.stateMachine = StateMachine{
         ['walk'] = function() return PlayerWalkState(self.player, self.currentRoom) end,

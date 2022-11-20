@@ -108,6 +108,64 @@ ENTITY_DEFS = {
                 texture = 'bat'
             },
         }
+    }, 
+
+    ['cultist'] = {
+        walkSpeed = CULTIST_WALK_SPEED,
+        width = 32,
+        height = 16,
+
+        animations = {
+            ['walk-right'] = {
+                frames = {1},
+                interval = 1,
+                texture = 'cultist'
+            },
+
+            ['walk-down'] = {
+                frames = {3},
+                interval = 1,
+                texture = 'cultist'
+            },
+
+            ['walk-left'] = {
+                frames = {2},
+                interval = 0.1,
+                texture = 'cultist'
+            },
+
+            ['walk-up'] = {
+                frames = {4},
+                interval = 0.1,
+                texture = 'cultist'
+            },
+
+            ['idle-right'] = {
+                frames = {1},
+                interval = 1,
+                texture = 'cultist'
+            },
+
+            ['idle-down'] = {
+                frames = {3},
+                interval = 1,
+                texture = 'cultist'
+            },
+
+            ['idle-left'] = {
+                frames = {2},
+                interval = 1,
+                texture = 'cultist'
+            },
+
+            ['idle-up'] = {
+                frames = {4},
+                interval = 1,
+                texture = 'cultist'
+            },
+        }
     }
+
+    
 
 }

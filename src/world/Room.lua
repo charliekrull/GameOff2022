@@ -72,17 +72,17 @@ function Room:generateEntities() --put the entities in the right spots
     if self.tileMap.layers['Entities'] then
         for k, ent in pairs(self.tileMap.layers['Entities'].objects) do
             local e = Entity{
-                walkSpeed = ENTITY_DEFS['bat'].walkSpeed,
-                animations = ENTITY_DEFS['bat'].animations,
+                walkSpeed = ENTITY_DEFS['cultist'].walkSpeed,
+                animations = ENTITY_DEFS['cultist'].animations,
 
                 --place the entity in the room
                 x = ent.x,
                 y = ent.y,
 
-                width = ENTITY_DEFS['bat'].width,
-                height = ENTITY_DEFS['bat'].height,
+                width = ENTITY_DEFS['cultist'].width,
+                height = ENTITY_DEFS['cultist'].height,
 
-                texture = 'bat',
+                texture = 'cultist',
 
                 room = self
 

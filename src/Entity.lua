@@ -6,13 +6,19 @@ Entity = Class{}
 
 function Entity:init(def)
     self.direction = 'down'
+    
 
     self.animations = self:createAnimations(def.animations)
 
     self.x = def.x
     self.y = def.y
+
     self.width = def.width
     self.height = def.height
+
+    --point representing the midpoint of their FOV
+    self.aheadX = self.x + self.width/2
+    self.aheadY = self.y + 10
 
     --drawing offsets in case of padded sprites
     self.offsetX = def.offsetX or 0
@@ -22,6 +28,8 @@ function Entity:init(def)
     self.texture = def.texture
 
     self.room = def.room
+
+    
 end
 
 function Entity:createAnimations(animations)
@@ -57,6 +65,25 @@ function Entity:update(dt)
     if self.currentAnimation then
         self.currentAnimation:update(dt)
     end
+
+    if self.direction == 'down' then
+        self.aheadX = self.x + self.width/2
+        self.aheadY = self.y + 20
+
+    elseif self.direction == 'up' then
+        self.aheadX = self.x + self.width/2
+        self.aheadY = self.y - 20
+
+    elseif self.direction == 'right' then
+        
+        self.aheadX = self.x + 20
+        self.aheadY = self.y + self.height/2
+
+    elseif self.direction == 'left' then
+        self.aheadX = self.x - 20
+        self.aheadY = self.y + self.height/2    
+    
+    end
 end
 
 function Entity:processAI(params, dt)
@@ -68,6 +95,17 @@ function Entity:render(adjacentOffsetX, adjacentOFfsetY)
     self.stateMachine:render()
     love.graphics.setColor(1, 1, 1, 1)
     self.x, self.y = self.x - (adjacentOffsetX or 0), self.y - (adjacentOFfsetY or 0)
+
+    --draw an indicator if the entity can see the player, for debugging purposes
+    if self:canSee(self.room.player) then
+        love.graphics.setColor(1, 0, 0, 1)
+        love.graphics.rectangle('fill', self.x + 4, self.y - 16, 8, 8)
+        love.graphics.setColor(1, 1, 1, 1)
+    end
+
+    love.graphics.setColor(0, 0, 1, 1)
+    love.graphics.circle('fill', self.aheadX, self.aheadY, 2)
+    love.graphics.setColor(1, 1, 1, 1)
 end
 
 function Entity:checkObjectCollisions()
@@ -86,4 +124,30 @@ function Entity:checkObjectCollisions()
 
     return collidedObjects
 
+end
+
+function Entity:canSee(player) --used for entities other than the player that will be searching for her
+    --calculate the distance between player and entity
+    local distToPlayer = math.sqrt(math.abs(player.x - self.x) ^ 2 + math.abs(player.y - self.y) ^ 2)
+
+    if distToPlayer <= 120 then
+    --doing some trigonometry ripped from the internet
+        --start by getting the vector to the midline of the FOV
+        local selfToMid = math.sqrt((self.x + self.width/2 - self.aheadX)^2 + (self.y + self.height/2 - self.aheadY)^2)
+        --then from self to the player
+        local selfToPlayer = math.sqrt((self.x + self.width/2 - player.x)^2 + (self.y + self.height/2 - player.y)^2)
+        --we'll also need from the player to the midpoint
+        local midToPlayer = math.sqrt((player.x - self.aheadX) ^ 2 + (player.y - self.aheadY)^2)
+
+        --calculate the angle between them
+        local angle = math.acos((selfToMid^2 + selfToPlayer^2 - midToPlayer^2)/(2 * selfToMid * selfToPlayer))
+
+        if angle < math.pi/2 then
+            return true
+        end
+
+    end
+    
+    return false
+    
 end
