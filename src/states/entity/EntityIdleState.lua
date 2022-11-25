@@ -20,7 +20,7 @@ function EntityIdleState:processAI(params, dt)
     end
 
     if self.waitTimer >= self.waitDuration then
-        self.entity:changeState('patrol')
+        --self.entity:changeState('patrol')
     end
 end
 

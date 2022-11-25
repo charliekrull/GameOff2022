@@ -10,8 +10,8 @@ function PlayState:enter()
         walkSpeed = ENTITY_DEFS['player'].walkSpeed,
         animations = ENTITY_DEFS['player'].animations,
 
-        x = VIRTUAL_WIDTH / 2 - 8,
-        y = VIRTUAL_HEIGHT / 2 - 16,
+        x = 24 * TILE_SIZE,
+        y = 20 * TILE_SIZE,
 
         width = 16,
         height = 32,

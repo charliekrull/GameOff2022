@@ -15,6 +15,7 @@ require 'src/Entity'
 require 'src/Player'
 require 'src/entity_defs'
 require 'src/util'
+require 'src/Bresenham'
 
 require 'src/Animation'
 

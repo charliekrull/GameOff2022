@@ -143,7 +143,20 @@ function Entity:canSee(player) --used for entities other than the player that wi
         local angle = math.acos((selfToMid^2 + selfToPlayer^2 - midToPlayer^2)/(2 * selfToMid * selfToPlayer))
 
         if angle < math.pi/2 then
+            local points = bresenham(self.x, self.y, player.x, player.y)
+            for k, point in pairs(points) do
+                for l, obj in pairs(self.room.objects) do
+                    if not (point['x'] < obj.x or point['x'] > obj.x + obj.width or point['y'] < obj.y or point['y'] > obj.y + obj.height) then
+                        
+                        return false
+                    end
+
+
+                end
+            end
+
             return true
+            
         end
 
     end
