@@ -9,8 +9,8 @@ return {
   height = 43,
   tilewidth = 16,
   tileheight = 16,
-  nextlayerid = 5,
-  nextobjectid = 10,
+  nextlayerid = 6,
+  nextobjectid = 12,
   properties = {},
   tilesets = {
     {
@@ -213,6 +213,46 @@ return {
           height = 0,
           rotation = 0,
           visible = true,
+          properties = {}
+        }
+      }
+    },
+    {
+      type = "objectgroup",
+      draworder = "topdown",
+      id = 5,
+      name = "Routes",
+      class = "",
+      visible = true,
+      opacity = 0,
+      offsetx = 0,
+      offsety = 0,
+      parallaxx = 1,
+      parallaxy = 1,
+      properties = {},
+      objects = {
+        {
+          id = 11,
+          name = "",
+          class = "",
+          shape = "polygon",
+          x = 400,
+          y = 224,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          polygon = {
+            { x = 0, y = 0 },
+            { x = 176, y = 0 },
+            { x = 176, y = -144 },
+            { x = -240, y = -144 },
+            { x = -240, y = 352 },
+            { x = 160, y = 352 },
+            { x = 160, y = 112 },
+            { x = -176, y = 112 },
+            { x = -176, y = 0 }
+          },
           properties = {}
         }
       }

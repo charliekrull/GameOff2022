@@ -88,10 +88,12 @@ function Room:generateEntities() --put the entities in the right spots
 
             }
 
+            local waypoints = e:getWaypoints(self.tileMap)
+
             e.stateMachine = StateMachine{
                 ['walk'] = function() return EntityWalkState(e, self) end,
                 ['idle'] = function() return EntityIdleState(e) end,
-                ['patrol'] = function() return EntityPatrolState(e, {10 * TILE_SIZE, 6 * TILE_SIZE, 34 * TILE_SIZE, 6 * TILE_SIZE, 34 * TILE_SIZE, 34 * TILE_SIZE, 10 * TILE_SIZE, 34 * TILE_SIZE}) end
+                ['patrol'] = function() return EntityPatrolState(e, waypoints) end
             }
 
             e:changeState('idle')

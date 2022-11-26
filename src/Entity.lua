@@ -164,3 +164,30 @@ function Entity:canSee(player) --used for entities other than the player that wi
     return false
     
 end
+
+function Entity:getWaypoints(tilemap)
+    local waypoints = {}
+    local currentX = 0
+    local currentY = 0
+    for k, route in pairs(tilemap.layers['Routes'].objects) do
+        if route.x == self.x and route.y == self.y then
+            for l, point in ipairs(route.polygon) do
+
+                currentX = currentX + point.x
+                currentY = currentY + point.y
+                
+                waypoints[#waypoints + 1] = currentX
+                waypoints[#waypoints + 1] = currentY
+
+                currentX = 0
+                currentY = 0
+
+               
+            end
+        end        
+    end
+
+    
+
+    return waypoints
+end
