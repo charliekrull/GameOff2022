@@ -3,10 +3,19 @@ EntityPatrolState = Class{__includes = BaseState}
 function EntityPatrolState:init(entity, points)
     self.entity = entity
     self.wayPoints = points
+    self.entity.wayPoints = self.wayPoints
     self.pointIndex = 1 --start with the first point of course
     self.nextPointX = self.wayPoints[self.pointIndex] 
     self.nextPointY = self.wayPoints[self.pointIndex + 1]
 
+end
+
+function EntityPatrolState:enter(params)
+    print_r(params.wayPoints)
+    self.wayPoints = params.wayPoints
+    self.pointIndex = params.pointIndex
+    self.nextPointX = self.wayPoints[self.pointIndex]
+    self.nextPointY = self.wayPoints[self.pointIndex + 1]
 end
 
 function EntityPatrolState:update(dt)
@@ -34,7 +43,16 @@ function EntityPatrolState:update(dt)
 
         self.nextPointX = self.wayPoints[self.pointIndex]
         self.nextPointY = self.wayPoints[self.pointIndex + 1]
+
+        self.entity:changeState('idle')
+
+        
     end
+end
+
+function EntityPatrolState:exit()
+    self.entity.wayPoints = self.wayPoints
+    self.entity.pointIndex = self.pointIndex
 end
 
 function EntityPatrolState:render()

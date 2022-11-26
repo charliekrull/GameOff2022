@@ -29,6 +29,9 @@ function Entity:init(def)
 
     self.room = def.room
 
+    self.pointIndex = 1
+    self.wayPoints = {}
+
     
 end
 
@@ -51,8 +54,8 @@ function Entity:collides(target)
                 self.y + self.height < target.y or self.y > target.y + target.height)
 end
 
-function Entity:changeState(name)
-    self.stateMachine:change(name)
+function Entity:changeState(name, params)
+    self.stateMachine:change(name, params)
 end
 
 function Entity:changeAnimation(name)
