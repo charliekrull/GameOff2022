@@ -11,7 +11,7 @@ function EntityPatrolState:init(entity, points)
 end
 
 function EntityPatrolState:enter(params)
-    print_r(params.wayPoints)
+    --print_r(params.wayPoints)
     self.wayPoints = params.wayPoints
     self.pointIndex = params.pointIndex
     self.nextPointX = self.wayPoints[self.pointIndex]

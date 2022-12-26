@@ -20,6 +20,9 @@ function Entity:init(def)
     self.aheadX = self.x + self.width/2
     self.aheadY = self.y + 10
 
+    self.visionRange = 120
+    self.drawFov = true
+
     --drawing offsets in case of padded sprites
     self.offsetX = def.offsetX or 0
     self.offsetY = def.offsetY or 0
@@ -107,7 +110,27 @@ function Entity:render(adjacentOffsetX, adjacentOFfsetY)
     end
 
     love.graphics.setColor(0, 0, 1, 1)
-    love.graphics.circle('fill', self.aheadX, self.aheadY, 2)
+    --love.graphics.circle('fill', self.aheadX, self.aheadY, 2)
+
+    --draw FOV
+    if self.drawFov then
+        local arcAngle --radians
+        love.graphics.setColor(1, 0, 0, 0.75)
+        if self.direction == 'up' then
+            arcAngle = (3 * math.pi) / 2
+
+        elseif self.direction == 'right' then
+            arcAngle = 0
+
+        elseif self.direction == 'down' then
+            arcAngle = math.pi/2
+
+        elseif self.direction == 'left' then
+            arcAngle = math.pi    
+        
+        end
+        love.graphics.arc('fill', self.x + self.width / 2, self.y, self.visionRange, arcAngle - math.pi / 4, arcAngle + math.pi / 4)
+    end
     love.graphics.setColor(1, 1, 1, 1)
 end
 
@@ -133,7 +156,7 @@ function Entity:canSee(player) --used for entities other than the player that wi
     --calculate the distance between player and entity
     local distToPlayer = math.sqrt(math.abs(player.x - self.x) ^ 2 + math.abs(player.y - self.y) ^ 2)
 
-    if distToPlayer <= 120 then
+    if distToPlayer <= self.visionRange then
     --doing some trigonometry ripped from the internet
         --start by getting the vector to the midline of the FOV
         local selfToMid = math.sqrt((self.x + self.width/2 - self.aheadX)^2 + (self.y + self.height/2 - self.aheadY)^2)
@@ -145,7 +168,7 @@ function Entity:canSee(player) --used for entities other than the player that wi
         --calculate the angle between them
         local angle = math.acos((selfToMid^2 + selfToPlayer^2 - midToPlayer^2)/(2 * selfToMid * selfToPlayer))
 
-        if angle < math.pi/2 then
+        if angle < math.pi/4 then
             local points = bresenham(self.x, self.y, player.x, player.y)
             for k, point in pairs(points) do
                 for l, obj in pairs(self.room.objects) do
