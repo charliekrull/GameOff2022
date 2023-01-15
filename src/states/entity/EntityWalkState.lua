@@ -12,38 +12,25 @@ function EntityWalkState:update(dt)
 
     self.objHit = false
 
-    if self.entity.direction == 'left' then
-        self.entity.x = self.entity.x - self.entity.walkSpeed * dt
-        
-
-    elseif self.entity.direction == 'right' then
-        self.entity.x = self.entity.x + self.entity.walkSpeed * dt
-        
-    elseif self.entity.direction == 'up' then
-        self.entity.y = self.entity.y - self.entity.walkSpeed * dt
-        
-    elseif self.entity.direction == 'down' then
-        self.entity.y = self.entity.y + self.entity.walkSpeed * dt
-    
-    
+    if self.entity.dx ~= 0 and self.entity.dy ~= 0 then
+        self.entity.dx = self.entity.dx / math.sqrt(2)
+        self.entity.dy = self.entity.dy / math.sqrt(2)
     end
+
+    self.entity.x = self.entity.x + self.entity.dx * dt
+    self.entity.y = self.entity.y + self.entity.dy * dt
+
+    
+    
+    
+
 
     local collidedObjects = self.entity:checkObjectCollisions()
 
     if #collidedObjects > 0 then
         self.objHit = true
-        if self.entity.direction == 'left' then
-            self.entity.x = self.entity.x + self.entity.walkSpeed * dt
-
-        elseif self.entity.direction == 'right' then
-            self.entity.x = self.entity.x - self.entity.walkSpeed * dt
-
-        elseif self.entity.direction == 'up' then
-            self.entity.y = self.entity.y + self.entity.walkSpeed * dt
-
-        elseif self.entity.direction == 'down' then
-            self.entity.y = self.entity.y - self.entity.walkSpeed * dt
-        end
+        self.entity.x = self.entity.x - self.entity.dx * dt
+        self.entity.y = self.entity.y - self.entity.dy * dt
     end
 
 end
@@ -55,7 +42,15 @@ function EntityWalkState:processAI(params, dt)
 
     if self.moveDuration == 0 then
         self.moveDuration = math.random(3)
-        self.entity.direction = directions[math.random(#directions)]
+        self.dx = math.random(-1, 1) * self.walkSpeed
+        self.dy = math.random(-1, 1) * self.walkSpeed
+        if self.dx >= self.dy then
+            self.direction = self.dx < 0 and 'left' or 'right'
+
+        else
+            self.direction = self.dy < 0 and 'up' or 'down'
+        end
+
         
         self.entity:changeAnimation('walk-' .. self.entity.direction)
 
@@ -67,7 +62,12 @@ function EntityWalkState:processAI(params, dt)
 
         else
             self.moveDuration = math.random(3)
-            self.entity.direction = directions[math.random(#directions)]
+            if self.dx >= self.dy then
+                self.direction = self.dx < 0 and 'left' or 'right'
+
+            else
+                self.direction = self.dy < 0 and 'up' or 'down'
+            end
             
             self.entity:changeAnimation('walk-' .. self.entity.direction)
         end

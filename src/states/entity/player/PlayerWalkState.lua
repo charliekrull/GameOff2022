@@ -6,25 +6,50 @@ function PlayerWalkState:init(player, room)
 end
 
 function PlayerWalkState:update(dt)
+
+    self.entity.dx = 0
+    self.entity.dy = 0
+
     if love.keyboard.isDown('left') then
         self.entity.direction = 'left'
-        self.entity:changeAnimation('walk-left')
+        self.entity.dx = -self.entity.walkSpeed
         
-    elseif love.keyboard.isDown('right') then
+
+    end
+        
+    if love.keyboard.isDown('right') then
         self.entity.direction = 'right'
-        self.entity:changeAnimation('walk-right')
+        self.entity.dx = self.entity.walkSpeed
+        
+    end
 
-    elseif love.keyboard.isDown('down') then
+    if love.keyboard.isDown('down') then
         self.entity.direction = 'down'
-        self.entity:changeAnimation('walk-down')
+        self.entity.dy = self.entity.walkSpeed
+        
+    end
 
-    elseif love.keyboard.isDown('up') then
+    if love.keyboard.isDown('up') then
         self.entity.direction = 'up'
-        self.entity:changeAnimation('walk-up')
+        self.entity.dy = -self.entity.walkSpeed
+        
 
-    else
+    end
+
+    if self.entity.dx ~= 0 and self.entity.dy ~= 0 then
+        self.entity.dx = self.entity.dx * math.sqrt(2)
+        self.entity.dy = self.entity.dy * math.sqrt(2)
+    end
+
+    self.entity:changeAnimation('walk-'..self.entity.direction)
+
+    if self.dx == 0 and self.dy == 0 then
         self.entity:changeState('idle')
     end
+
+
+
+
 
 
     EntityWalkState.update(self, dt)
