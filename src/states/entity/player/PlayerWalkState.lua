@@ -36,11 +36,6 @@ function PlayerWalkState:update(dt)
 
     end
 
-    if self.entity.dx ~= 0 and self.entity.dy ~= 0 then
-        self.entity.dx = self.entity.dx * math.sqrt(2)
-        self.entity.dy = self.entity.dy * math.sqrt(2)
-    end
-
     self.entity:changeAnimation('walk-'..self.entity.direction)
 
     if self.dx == 0 and self.dy == 0 then
