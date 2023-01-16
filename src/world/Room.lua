@@ -16,7 +16,8 @@ function Room:init(def)
     self:generateWalls()
 
     self:generateEntities()
-   
+
+    
 
 
 
@@ -31,6 +32,10 @@ function Room:update(dt)
         entity:processAI({room = self}, dt)
         entity:update(dt)
     end
+
+    if love.keyboard.wasPressed('f') then
+        print()
+    end
    
 end
 
@@ -39,8 +44,8 @@ function Room:render()
         for x = 1, self.width do
             local tile = self.tiles[y][x]
             love.graphics.draw(gTextures['tilesheet'], gFrames['tiles'][tile.id],
-            (x - 1) * TILE_SIZE,
-            (y - 1) * TILE_SIZE)
+            (x - 1) * TILE_SIZE + self.renderOffsetX,
+            (y - 1) * TILE_SIZE + self.renderOffsetY)
         end
     end
     for k, obj in pairs(self.objects) do

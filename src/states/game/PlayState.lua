@@ -2,16 +2,14 @@ PlayState = Class{__includes = BaseState}
 
 function PlayState:enter()
     self.camX = 0
-    self.camY = 0
-
-    
+    self.camY = 0   
 
     self.player = Player{
         walkSpeed = ENTITY_DEFS['player'].walkSpeed,
         animations = ENTITY_DEFS['player'].animations,
 
-        x = 24 * TILE_SIZE,
-        y = 20 * TILE_SIZE,
+        x = 10 * TILE_SIZE,
+        y = 10 * TILE_SIZE,
 
         width = 16,
         height = 32,
@@ -19,10 +17,11 @@ function PlayState:enter()
         texture = 'princess-damsel'
     }
 
-    self.currentRoom = Room({tileMap = sti('tilemaps/prisonCell.lua'), 
+    self.currentRoom = Room({tileMap = sti('tilemaps/prisonCell2.lua'), 
         player = self.player,
         width = 45,
         height = 42})
+
 
     
     self.currentMap = self.currentRoom.tileMap
@@ -52,32 +51,34 @@ end
 
 function PlayState:render()
 
-   
+
     love.graphics.push()
     --render the world
-    --self.currentRoom:render()
+    -- self.currentRoom:render()
 
-    
+   
+        
     
     love.graphics.translate(-math.floor(self.camX), -math.floor(self.camY))
-    self.currentMap:draw(-math.floor(self.camX), -math.floor(self.camY)) --function from sti
-    
-   
+    self.currentMap:draw(-math.floor(self.camX), --function from sti
+    -math.floor(self.camY ))
+
+
     for k, entity in pairs(self.currentRoom.entities) do
         entity:render()
     end
     
-    self.player:render()
-    
+    self.player:render(self.currentRoom.renderOffsetX)
     
     love.graphics.pop()
 end
 
 function PlayState:updateCamera()
-    self.camX = math.max(0, 
-        math.min(TILE_SIZE * self.currentMap.width - VIRTUAL_WIDTH,
-        self.player.x - (VIRTUAL_WIDTH / 2 - 8)))
+    self.camX = math.max((TILE_SIZE * self.currentMap.width - VIRTUAL_WIDTH) / 2,
+        math.min((TILE_SIZE * self.currentMap.width - VIRTUAL_WIDTH)/2,
+            self.player.x - (VIRTUAL_HEIGHT/2 - 8)))
 
-    self.camY =  math.max(0, math.min(TILE_SIZE * self.currentMap.height - VIRTUAL_HEIGHT,
+    self.camY = math.max((TILE_SIZE * self.currentMap.height - VIRTUAL_HEIGHT ) /2, 
+        math.min((TILE_SIZE * self.currentMap.height - VIRTUAL_HEIGHT)/ 2,
         self.player.y - (VIRTUAL_HEIGHT / 2 - 8)))
 end
