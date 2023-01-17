@@ -37,7 +37,7 @@ gTextures = {
    ['cultist'] = love.graphics.newImage('graphics/Hench_sheet1.png')
 }
 
-gFrames = { ['tiles'] = GenerateQuads(gTextures['tilesheet'], TILE_SIZE, TILE_SIZE),
+gFrames = { ['tilesheet'] = GenerateQuads(gTextures['tilesheet'], TILE_SIZE, TILE_SIZE),
 ['princess-damsel'] = GenerateQuads(gTextures['princess-damsel'], TILE_SIZE, 32),
 ['bat'] = GenerateQuads(gTextures['bat'], 32, TILE_SIZE),
 ['cultist'] = GenerateQuads(gTextures['cultist'], TILE_SIZE, 32)

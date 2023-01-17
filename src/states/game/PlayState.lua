@@ -67,6 +67,10 @@ function PlayState:render()
     for k, entity in pairs(self.currentRoom.entities) do
         entity:render()
     end
+
+    for k, obj in pairs(self.currentRoom.objects) do
+        obj:render()
+    end
     
     self.player:render(self.currentRoom.renderOffsetX)
     

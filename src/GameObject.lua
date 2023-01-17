@@ -23,5 +23,5 @@ function GameObject:update(dt)
 end
 
 function GameObject:render()
-    love.graphics.draw(gTextures[self.texture], gFrames[self.texture][self.frame], self.x, self.y)
+    love.graphics.draw(gTextures[self.texture], gFrames[self.texture][self.frame], math.floor(self.x), math.floor(self.y))
 end

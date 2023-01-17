@@ -17,6 +17,8 @@ function Room:init(def)
 
     self:generateEntities()
 
+    self:generateObjects()
+
     
 
 
@@ -33,8 +35,8 @@ function Room:update(dt)
         entity:update(dt)
     end
 
-    if love.keyboard.wasPressed('f') then
-        print()
+    for k, object in pairs(self.objects) do
+        object:update(dt)
     end
    
 end
@@ -62,7 +64,7 @@ function Room:generateWalls()
                 solid = true,
                 x = obj.x,
                 y = obj.y,
-                texture = gTextures['tilesheet'],
+                texture = 'tilesheet',
                 frame = EMPTY_TILE
             }
             table.insert(self.objects, wall)
@@ -111,5 +113,38 @@ function Room:generateEntities() --put the entities in the right spots
 end
 
 function Room:generateObjects() --add objects to the room
+    if self.tileMap.layers['GameObjects'] then
+        for k, obj in pairs(self.tileMap.layers['GameObjects'].objects) do
+            if obj.name == 'door' then
+                local door = GameObject{
+                    width = obj.width,
+                    height = obj.height,
+                    x = obj.x,
+                    y = obj.y,
+                    solid = true,
+                    texture = 'tilesheet',
+                    frame = EMPTY_TILE
+                    
+                }
 
+                
+
+                table.insert(self.objects, door)
+
+            elseif obj.name == 'TNT' then
+                local tnt = GameObject{
+                    width = TILE_SIZE,
+                    height = TILE_SIZE,
+                    x = obj.x,
+                    y = obj.y,
+                    solid = true,
+                    texture = 'tilesheet',
+                    frame = 70
+                }
+
+                table.insert(self.objects, tnt)
+            
+            end
+        end
+    end
 end
