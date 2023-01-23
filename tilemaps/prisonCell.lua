@@ -204,7 +204,7 @@ return {
       objects = {
         {
           id = 7,
-          name = "",
+          name = "cultist",
           class = "",
           shape = "point",
           x = 400,

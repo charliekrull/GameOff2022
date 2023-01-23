@@ -10,7 +10,7 @@ return {
   tilewidth = 16,
   tileheight = 16,
   nextlayerid = 5,
-  nextobjectid = 13,
+  nextobjectid = 14,
   properties = {},
   tilesets = {
     {
@@ -114,7 +114,9 @@ return {
           height = 32,
           rotation = 0,
           visible = true,
-          properties = {}
+          properties = {
+            ["leadsTo"] = "hallway"
+          }
         },
         {
           id = 11,
@@ -123,6 +125,19 @@ return {
           shape = "point",
           x = 80,
           y = 80,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 13,
+          name = "player-entry-point",
+          class = "",
+          shape = "point",
+          x = 160,
+          y = 48,
           width = 0,
           height = 0,
           rotation = 0,

@@ -14,7 +14,8 @@ function GameObject:init(def)
     self.width = def.width
     self.height = def.height
     --empty function for what happens when you collide with it
-    self.onCollide = function() end
+    self.onCollide = def.onCollide
+    self.leadsTo = def.leadsTo
 
 end
 

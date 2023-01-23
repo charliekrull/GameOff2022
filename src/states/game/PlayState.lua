@@ -8,8 +8,8 @@ function PlayState:enter()
         walkSpeed = ENTITY_DEFS['player'].walkSpeed,
         animations = ENTITY_DEFS['player'].animations,
 
-        x = 10 * TILE_SIZE,
-        y = 10 * TILE_SIZE,
+        x = 4 * TILE_SIZE,
+        y = 31 * TILE_SIZE,
 
         width = 16,
         height = 32,
@@ -17,10 +17,18 @@ function PlayState:enter()
         texture = 'princess-damsel'
     }
 
-    self.currentRoom = Room({tileMap = sti('tilemaps/prisonCell2.lua'), 
+    self.rooms = {['prison-cell'] = Room({tileMap = sti('tilemaps/prisonCell2.lua'), 
         player = self.player,
         width = 45,
-        height = 42})
+        height = 42}),
+
+        ['hallway'] = Room({tileMap = sti('tilemaps/hallway.lua'),
+        player = self.player,
+        width = 80,
+        height = 36})
+    }
+
+    self.currentRoom = self.rooms['hallway']
 
 
     
@@ -36,6 +44,11 @@ function PlayState:enter()
     }
 
     self.player:changeState('idle')
+
+    Event.on("change-room", function(nextRoom)
+        self:changeRoom(nextRoom)
+        return false
+    end)
     
 end
 
@@ -72,17 +85,26 @@ function PlayState:render()
         obj:render()
     end
     
-    self.player:render(self.currentRoom.renderOffsetX)
+    self.player:render(self.currentRoom.renderOffsetX, self.currentRoom.renderOffsetY)
     
     love.graphics.pop()
 end
 
 function PlayState:updateCamera()
-    self.camX = math.max((TILE_SIZE * self.currentMap.width - VIRTUAL_WIDTH) / 2,
-        math.min((TILE_SIZE * self.currentMap.width - VIRTUAL_WIDTH)/2,
-            self.player.x - (VIRTUAL_HEIGHT/2 - 8)))
+    self.camX = math.max(0,
+        math.min(TILE_SIZE * self.currentMap.width - VIRTUAL_WIDTH,
+        self.player.x - (VIRTUAL_WIDTH / 2 - 8)))
 
-    self.camY = math.max((TILE_SIZE * self.currentMap.height - VIRTUAL_HEIGHT ) /2, 
-        math.min((TILE_SIZE * self.currentMap.height - VIRTUAL_HEIGHT)/ 2,
-        self.player.y - (VIRTUAL_HEIGHT / 2 - 8)))
+    self.camY = math.min(TILE_SIZE * self.currentMap.height - VIRTUAL_HEIGHT,
+        self.player.y - (VIRTUAL_HEIGHT / 2 - 8)
+    )
+end
+
+function PlayState:changeRoom(nextRoom)
+    self.currentRoom = self.rooms[nextRoom]
+    self.currentMap = self.currentRoom.tileMap
+    self.player.room = self.currentRoom
+    self.player.map = self.currentMap
+    self.player.x = self.player.room.playerEntryPointX
+    self.player.y = self.player.room.playerEntryPointY
 end

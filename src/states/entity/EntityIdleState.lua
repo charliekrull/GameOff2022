@@ -19,9 +19,9 @@ function EntityIdleState:processAI(params, dt)
         self.waitTimer = self.waitTimer + dt
     end
 
-    if self.waitTimer >= self.waitDuration then
-        self.entity:changeState('patrol', {wayPoints = self.entity.wayPoints, pointIndex = self.entity.pointIndex})
-    end
+    -- if self.waitTimer >= self.waitDuration then
+    --     self.entity:changeState('patrol', {wayPoints = self.entity.wayPoints, pointIndex = self.entity.pointIndex})
+    -- end
 end
 
 function EntityIdleState:render()

@@ -31,6 +31,13 @@ function EntityWalkState:update(dt)
         self.objHit = true
         self.entity.x = self.entity.x - self.entity.dx * dt
         self.entity.y = self.entity.y - self.entity.dy * dt
+
+        for k, obj in pairs(collidedObjects) do
+            if obj.onCollide then
+                obj:onCollide()
+            end
+
+        end
     end
 
 end

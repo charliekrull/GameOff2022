@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="20" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="13">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="20" height="25" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="14">
  <editorsettings>
   <export target="../prisonCell2.lua" format="lua"/>
  </editorsettings>
@@ -36,8 +36,15 @@
 </data>
  </layer>
  <objectgroup id="4" name="GameObjects" opacity="0">
-  <object id="6" name="door" x="144" y="0" width="32" height="32"/>
+  <object id="6" name="door" x="144" y="0" width="32" height="32">
+   <properties>
+    <property name="leadsTo" value="hallway"/>
+   </properties>
+  </object>
   <object id="11" name="TNT" x="80" y="80">
+   <point/>
+  </object>
+  <object id="13" name="player-entry-point" x="160" y="48">
    <point/>
   </object>
  </objectgroup>

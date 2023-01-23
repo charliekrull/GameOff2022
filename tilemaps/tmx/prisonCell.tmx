@@ -61,7 +61,7 @@
   <object id="8" x="272" y="272" width="336" height="32"/>
  </objectgroup>
  <objectgroup id="3" name="Entities">
-  <object id="7" x="400" y="224">
+  <object id="7" name="cultist" x="400" y="224">
    <point/>
   </object>
  </objectgroup>

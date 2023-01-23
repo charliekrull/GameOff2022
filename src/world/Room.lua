@@ -37,6 +37,7 @@ function Room:update(dt)
 
     for k, object in pairs(self.objects) do
         object:update(dt)
+        
     end
    
 end
@@ -78,18 +79,19 @@ function Room:generateEntities() --put the entities in the right spots
 
     if self.tileMap.layers['Entities'] then
         for k, ent in pairs(self.tileMap.layers['Entities'].objects) do
+
             local e = Entity{
-                walkSpeed = ENTITY_DEFS['cultist'].walkSpeed,
-                animations = ENTITY_DEFS['cultist'].animations,
+                walkSpeed = ENTITY_DEFS[ent.name].walkSpeed,
+                animations = ENTITY_DEFS[ent.name].animations,
 
                 --place the entity in the room
                 x = ent.x,
                 y = ent.y,
 
-                width = ENTITY_DEFS['cultist'].width,
-                height = ENTITY_DEFS['cultist'].height,
+                width = ENTITY_DEFS[ent.name].width,
+                height = ENTITY_DEFS[ent.name].height,
 
-                texture = 'cultist',
+                texture = ent.name,
 
                 room = self
 
@@ -123,12 +125,16 @@ function Room:generateObjects() --add objects to the room
                     y = obj.y,
                     solid = true,
                     texture = 'tilesheet',
-                    frame = EMPTY_TILE
+                    frame = EMPTY_TILE,
+                    leadsTo = obj.properties.leadsTo
+                    
                     
                 }
+                door.onCollide = function()
+                    Event.dispatch('change-room', door.leadsTo)
+                end
 
                 
-
                 table.insert(self.objects, door)
 
             elseif obj.name == 'TNT' then
@@ -139,10 +145,18 @@ function Room:generateObjects() --add objects to the room
                     y = obj.y,
                     solid = true,
                     texture = 'tilesheet',
-                    frame = 70
+                    frame = 70, 
+                    onCollide = function()
+                        print('boom')
+                    end
                 }
 
                 table.insert(self.objects, tnt)
+
+            elseif obj.name == 'player-entry-point' then
+                self.playerEntryPointX = obj.x
+                self.playerEntryPointY = obj.y
+    
             
             end
         end
